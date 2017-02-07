@@ -76,8 +76,10 @@ def     find(letter, alphabet):
     return (i)
 
 def     shift(i):
-    return ((-1), ((i + 6) % 25))[(i <= 25 and i >= 0)]
+    return ((-1), ((i + 6) % 26))[(i <= 25 and i >= 0)]
 
-print(shift(int(sys.argv[1])))
+def     cipherLetter(letter, alphabet):
+    return (alphabet[shift(find(letter, alphabet))])
 
+print(cipherLetter(sys.argv[2], sys.argv[3]))
 
