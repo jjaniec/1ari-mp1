@@ -16,8 +16,10 @@ def     convertLetter(text):
 def     mix():
     buf_str = ""
 
-    for i in range(0, 26):
-        buf_str += chr(random.randint(0, 25) + 65)
+    while (len(buf_str) < 26):
+        buf_char = chr(random.randint(0, 25) + 65)
+        if buf_char not in buf_str:
+            buf_str += buf_char
     return (buf_str)
 
 def     createCylinder(file, n):
@@ -46,7 +48,6 @@ def     loadCylinder(file):
             buf += content[(i * 27) + j]
         lines_dict[i + 1] = buf
         buf = ""
-    #print(lines_dict)
     return (lines_dict)
 
 def     ft_is_anagram(str1, str2):
@@ -81,5 +82,8 @@ def     shift(i):
 def     cipherLetter(letter, alphabet):
     return (alphabet[shift(find(letter, alphabet))])
 
-print(cipherLetter(sys.argv[2], sys.argv[3]))
+#def     cipherText(cylinder, key, text):
+#    
 
+print(mix())
+#print(cipherLetter(sys.argv[2], sys.argv[3]))
