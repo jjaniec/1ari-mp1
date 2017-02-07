@@ -1,5 +1,6 @@
 import  sys     #For debug purposes
 import  random
+from collections import Counter
 
 FILEPATH    = "../CreatedFile.txt"
 FILENL      = 15 #createCylinder(->n)
@@ -48,5 +49,20 @@ def     loadCylinder(file):
     #print(lines_dict)
     return (lines_dict)
 
+def     ft_is_anagram(str1, str2):
+    if (len(str1) != len(str2)):
+        return (False)
+    return (Counter(str1) == Counter(str2))
+
+def     keyOK(key, n):
+    tmp_str = ""
+    while (n != 0):
+        tmp_str += str(n)
+        n -= 1
+    return (ft_is_anagram(key, tmp_str))
+
 #createCylinder(FILEPATH, FILENL)
 #loadCylinder(FILEPATH)
+print(keyOK(sys.argv[1], int(sys.argv[2])))
+
+
