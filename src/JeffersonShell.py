@@ -68,8 +68,16 @@ def     createKey(n):
         n -= 1
     return (''.join(random.sample(tmp_str,len(tmp_str))))
 
-#createCylinder(FILEPATH, FILENL)
-#loadCylinder(FILEPATH)
-#print(keyOK(sys.argv[1], int(sys.argv[2])))
-print(createKey(int(sys.argv[1])))
+def     find(letter, alphabet):
+    i = 0
+
+    while (alphabet[i] != letter and i < len(alphabet)):
+        i += 1
+    return (i)
+
+def     shift(i):
+    return ((-1), ((i + 6) % 25))[(i <= 25 and i >= 0)]
+
+print(shift(int(sys.argv[1])))
+
 
