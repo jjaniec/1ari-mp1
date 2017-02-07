@@ -50,17 +50,11 @@ def     loadCylinder(file):
         buf = ""
     return (lines_dict)
 
-def     ft_is_anagram(str1, str2):
-    if (len(str1) != len(str2)):
-        return (False)
-    return (Counter(str1) == Counter(str2))
-
-def     keyOK(key, n):
-    tmp_str = ""
-    while (n != 0):
-        tmp_str += str(n)
-        n -= 1
-    return (ft_is_anagram(key, tmp_str))
+def     keyOK(key ,n):
+    for i in range(1, n+1):
+        if i not in key:
+            return (False)
+    return (True)
 
 def     createKey(n):
     tmp_str = ""
@@ -70,11 +64,9 @@ def     createKey(n):
     return (''.join(random.sample(tmp_str,len(tmp_str))))
 
 def     find(letter, alphabet):
-    i = 0
-
-    while (alphabet[i] != letter and i < len(alphabet)):
-        i += 1
-    return (i)
+    for i in range(len(alphabet)):
+        if letter == alphabet[i]:
+            return (i)
 
 def     shift(i):
     return ((-1), ((i + 6) % 26))[(i <= 25 and i >= 0)]
@@ -82,8 +74,16 @@ def     shift(i):
 def     cipherLetter(letter, alphabet):
     return (alphabet[shift(find(letter, alphabet))])
 
-#def     cipherText(cylinder, key, text):
-#    
+def     cipherText(cylinder, key, text):
+    k = 1
+    c = ''
 
-print(mix())
-#print(cipherLetter(sys.argv[2], sys.argv[3]))
+    if len(cylinder) != len(key):
+        return ('The key is invalid')
+    text = convertLetter(text)
+    for t in text:
+        n = cipherLetter(t, cylinder.get(k))
+        c += cylinder.get(k)[n + 1]
+        k += 1
+    return (c)
+
