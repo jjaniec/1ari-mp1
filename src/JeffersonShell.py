@@ -61,8 +61,15 @@ def     keyOK(key, n):
         n -= 1
     return (ft_is_anagram(key, tmp_str))
 
+def     createKey(n):
+    tmp_str = ""
+    while (n != 0):
+        tmp_str += str(n)
+        n -= 1
+    return (''.join(random.sample(tmp_str,len(tmp_str))))
+
 #createCylinder(FILEPATH, FILENL)
 #loadCylinder(FILEPATH)
-print(keyOK(sys.argv[1], int(sys.argv[2])))
-
+#print(keyOK(sys.argv[1], int(sys.argv[2])))
+print(createKey(int(sys.argv[1])))
 
