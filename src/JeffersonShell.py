@@ -1,9 +1,9 @@
 import  sys     #For debug purposes
 import  random
-from collections import Counter
+from    collections import Counter
 
-FILEPATH    = "../CreatedFile.txt"
-FILENL      = 15 #createCylinder(->n)
+FILEPATH    = "../MP-1ARI.txt"
+#FILENL      = 15 #createCylinder(->n)
 
 def     convertLetter(text):
     tmp_str = ""
@@ -11,7 +11,7 @@ def     convertLetter(text):
     for letter in text:
         if letter.isalpha() and ord(letter) <= 123:
             tmp_str += letter
-    return (tmp_str)
+    return (tmp_str.upper())
 
 def     mix():
     buf_str = ""
@@ -71,19 +71,43 @@ def     find(letter, alphabet):
 def     shift(i):
     return ((-1), ((i + 6) % 26))[(i <= 25 and i >= 0)]
 
-def     cipherLetter(letter, alphabet):
-    return (alphabet[shift(find(letter, alphabet))])
+def     unshift(i):
+    return ((-1), ((i - 6) % 26))[(i <= 25 and i >= 0)]
 
-def     cipherText(cylinder, key, text):
-    k = 1
+def     cipherLetter(letter, alphabet):
+    return (shift(find(letter, alphabet)))
+
+def     uncipherLetter(letter, alphabet):
+    return (unshift(find(letter, alphabet)))
+
+def cipherText(cylinder,key,text):
+    k = 0
+    c = ''
+
+    if len(cylinder) != len(key):
+        return('The key is invalid')
+    text = convertLetter(text)
+    for t in text:
+        n = cipherLetter(t,cylinder.get(key[k]))
+        c += cylinder.get(key[k])[n]
+        k += 1
+    return c
+
+def uncipherText(cylinder,key,text):
+    k = 0
     c = ''
 
     if len(cylinder) != len(key):
         return ('The key is invalid')
     text = convertLetter(text)
     for t in text:
-        n = cipherLetter(t, cylinder.get(k))
-        c += cylinder.get(k)[n + 1]
+        n = uncipherLetter(t, cylinder.get(key[k]))
+        c += cylinder.get(key[k])[n]
         k += 1
-    return (c)
+    return c
 
+#cylinder = loadCylinder(FILEPATH)
+#h = 'supinfo'
+#key = [7, 4, 19, 13, 17, 18, 12, 15, 16, 10, 11, 2, 5, 20, 9, 8, 1, 14, 6, 3]
+
+#print(cipherText(cylinder,key,h))
