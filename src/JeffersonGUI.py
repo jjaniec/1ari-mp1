@@ -65,4 +65,27 @@ def displaykey(RED,fontObj,n,mySurface):
     mySurface.blit(texteSurface, texteRect)
     pygame.display.update()
 
+def NewCylinders(cylinder,key):
+    newCylinder = {}
+    for i in range(1,len(cylinder)+1):
+        newCylinder[i] = cylinder.get(key[i-1])
+    return newCylinder
+
+def displayNewCylinders(mySurface,newCylinder):
+    BLACK = (0,0,0)
+    pygame.draw.rect(mySurface, BLACK, (0 , 0, 600, 700))
+    pygame.display.update()
+    displayCylinders(mySurface,newCylinder)
+
+def rotateCylinder(cylinder,i,up):
+    rotate = cylinder.get(i)
+    if up == True:
+        rotate += rotate[0]
+        rotate = rotate[1:27]
+    else:
+        rotate = rotate[25] + rotate
+        rotate = rotate[:26]
+    cylinder[i] = rotate
+    return cylinder
+
 jeffersonGUI()
