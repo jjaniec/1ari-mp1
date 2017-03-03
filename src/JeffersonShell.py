@@ -1,7 +1,7 @@
 import  sys     #For debug purposes
 import  random
 
-FILEPATH    = "../CreatedFile.txt"
+FILEPATH    = "../Cylinder.txt"
 FILENL      = 20 #createCylinder(->n)
 
 
@@ -56,7 +56,6 @@ def keyOk(key, n):
         if i not in key:
             return False
     return True
-
 
 def createKey(n):
     lst = []
@@ -119,12 +118,7 @@ def uncipherText(cylinder, key, text):
     return c
 
 cylinder = loadCylinder(FILEPATH)
-h = 'XHWNIVTGBMZREQMFIREA'
-key = [7, 4, 19, 13, 17, 18, 12, 15, 16, 10, 11, 2, 5, 20, 9, 8, 1, 14, 6, 3]
+key = createKey(FILENL)
 
-#print(uncipherText(cylinder,key,h))
-print(cylinder)
-
-
-#createCylinder(FILEPATH, FILENL)
-#print(createKey(FILENL))
+print(cipherText(cylinder, key, "Hello World"))
+print(uncipherText(cylinder, key, cipherText(cylinder, key, "Hello World")))
