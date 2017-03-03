@@ -129,7 +129,7 @@ def rotateCylinder(cylinder,i,up):
     return cylinder
 
 def ft_print_env(mySurface, cylinder, coordsstrs):
-    fontObj = pygame.font.Font('Roboto-Thin.ttf', 14)
+    fontObj = pygame.font.Font('Comfortaa-Light.ttf', 14)
     textstrs = ["↑", "↓", "CLEAR", "CIPHER", "FINISH"]
     #print arrows, finish, cypher, clear
     pygame.draw.line(mySurface, (255, 0, 0), (50, 139), ((40 + 20 * (len(cylinder)), 139)))
