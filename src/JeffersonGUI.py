@@ -3,28 +3,45 @@ from pygame.locals import *
 
 pygame.init()
 
+FILEPATH    = "../Cylinder.txt"
+
 def jeffersonGUI():
-    cylinder = {1: 'WGAIKMRVZFOTHLQSBDJUYEPCNX', 2: 'GRYZLXJHAQFUKBTIDCSPNOMVWE', 3: 'ETORHYIMGPKCLNXZSQDFWUAJVB',
-                4: 'ZIKOYTBVALNJMUFDQWEHGXPRSC', 5: 'YWRTEBOINQSPCUAXVGMKJHDLFZ', 6: 'IXWREKMVPTYLGUONZQADFBCJSH',
-                7: 'APJSKWDZIXENRCLGTYMHUBFOQV', 8: 'ZKOAICLJQHPFGYXMBRWSEUVNDT', 9: 'HDUYSZBFMNKTJCPWQAROGXVIEL',
-                10: 'ZEFLINGUTRBDMQOWPSXYJKACVH', 11: 'ODMITBYELVSRHPANCJWFXZQUKG', 12: 'VKTHFNGUPAXYWDELCBSJRQOZMI',
-                13: 'VESGKLIDUFTONAXQCRBMWYHZJP', 14: 'YQSNRAUKXIWJFDPCOHBTLZGVEM', 15: 'MZHUAYPEKRVLXQFSIDBJCGNWTO',
-                16: 'WKYXIRPFLQBEHDGJSUVOTMCANZ', 17: 'THQCISYJDOFXMPBKAVLZREGWNU', 18: 'VDCSEGYOPQTUWZAKLRXIFNMHJB',
-                19: 'YQDTBNACPERJFKWUZIXHSVOLGM', 20: 'RKQVPWZIFBCXJATLNUEYDHSOGM'}
+    cylinder = loadCylinder(FILEPATH)
+    mySurface = pygame.display.set_mode((180 + 20 * (len(cylinder)), 650))
 
-    mySurface = pygame.display.set_mode((600, 700))
     pygame.display.set_caption("Jefferson's cylinders")
-    displayCylinders(mySurface,cylinder)
+    displayCylinders(mySurface, cylinder)
 
-    key = enterKey(mySurface, 20)
-    newcylinder = NewCylinders(cylinder,key)
-    displayNewCylinders(mySurface,newcylinder)
-    rotateCylinders(mySurface, newcylinder)
-    inProgress = True
-    while inProgress:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                inProgress = False
+    key = enterKey(mySurface, len(cylinder))
+    newcylinder = NewCylinders(cylinder, key)
+    displayNewCylinders(mySurface, newcylinder)
+
+    if (rotateCylinders(mySurface, newcylinder) == 0):
+        quit()
+    for event in pygame.event.get():
+         if event.type == QUIT:
+            quit()
+
+def ft_getnewlinesnb(str_):
+    count = 0
+
+    for i in range(0, len(str_)):
+        if (str_[i] == '\n'):
+            count += 1
+    return (count)
+
+def loadCylinder(file):
+    content = open(file, "r").read()
+    lines_dict = {}
+    i = 0
+    buf = ""
+
+    for i in range(0, ft_getnewlinesnb(content)):
+        for j in range(0, 26):
+            buf += content[(i * 27) + j]
+        lines_dict[i + 1] = buf
+        buf = ""
+    return (lines_dict)
 
 def displayCylinder(mySurface, cylinder, i):
     RED = (255,0,0)
@@ -46,7 +63,7 @@ def enterKey(mySurface,n):
     BLACK = (0, 0, 0)
     k = 1
     key = []
-    fontObj = pygame.font.Font('Roboto-Thin.ttf',14)
+    fontObj = pygame.font.Font('Roboto-Thin.ttf', 14)
     displaykey(RED,fontObj, n, mySurface)
     inProgress = True
     while inProgress:
@@ -112,9 +129,14 @@ def rotateCylinder(cylinder,i,up):
     return cylinder
 
 def ft_print_env(mySurface, cylinder, coordsstrs):
-    fontObj = pygame.font.Font('Roboto-Thin.ttf',14)
-    textstrs = ["u", "d", "CLEAR", "CIPHER", "FINISH"] #"↑", "↓"]
+    fontObj = pygame.font.Font('Roboto-Thin.ttf', 14)
+    textstrs = ["↑", "↓", "CLEAR", "CIPHER", "FINISH"]
     #print arrows, finish, cypher, clear
+    pygame.draw.line(mySurface, (255, 0, 0), (50, 139), ((40 + 20 * (len(cylinder)), 139)))
+    pygame.draw.line(mySurface, (255, 0, 0), (50, 159), ((40 + 20 * (len(cylinder)), 159)))
+    pygame.draw.line(mySurface, (255, 0, 0), (50, 259), ((40 + 20 * (len(cylinder)), 259)))
+    pygame.draw.line(mySurface, (255, 0, 0), (50, 279), ((40 + 20 * (len(cylinder)), 279)))
+    #print separating lines
     for j in range(0, len(textstrs)):
         texteSurface = fontObj.render(textstrs[j], True, (255, 0, 0))
         texteRect = texteSurface.get_rect()
@@ -130,8 +152,8 @@ def ft_print_env(mySurface, cylinder, coordsstrs):
 
 def rotateCylinders(mySurface,cylinder):
     coordsstrs = [(0, 560), (0, 580),\
-    (30 + 20 * (len(cylinder) + 1), 400),\
-    (30 + 20 * (len(cylinder) + 1), 450),\
+    (30 + 20 * (len(cylinder) + 1), 144),\
+    (30 + 20 * (len(cylinder) + 1), 264),\
     (30 + 20 * (len(cylinder) + 1), 560)]
     ft_print_env(mySurface, cylinder, coordsstrs)
     while 1:
@@ -149,10 +171,10 @@ def rotateCylinders(mySurface,cylinder):
                     print(cylinder)
                     ft_print_env(mySurface, cylinder, coordsstrs)
                 if (X > 30 + 20 * (len(cylinder) + 1)) and (X <= 30 + 20 * (len(cylinder) + 1) + 45):
-                    print("b")
-                    for _ in range(2, 5):
-                        if (Y >= coordsstrs[_][1]) and (Y <= coordsstrs[_][1] + 30):
-                            print(str(_))
+                    print("lol")
+                    if (Y >= coordsstrs[4][1]) and (Y <= coordsstrs[4][1] + 20):
+                            print("lol")
+                            return (0)
 
     pygame.display.update()
 
